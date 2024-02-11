@@ -1,0 +1,40 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class ="text-danger">
+@switch (Url.ActionContext.RouteData.Values["id"])
+{
+    case "1":
+        <p>User not found!</p>
+        break;    
+    case "2":
+        <p>User already exists!</p>
+        break;
+    case "3":
+        <p>User blocked!</p>
+        break;
+    case "500":
+        <p>Server error!</p>
+        break;
+    default:break;
+}
+</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <h3 class="text-danger">Your Accaunt must have been blocked or deleted! You can only log out!</h3>
+}
+else
+{
+    <h3 class="text-danger">Please enter your Accaunt first!</h3>
+}
+
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}

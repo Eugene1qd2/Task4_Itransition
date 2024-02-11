@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+   
+   @if(User.Identity.IsAuthenticated)
+    {
+        <h1>Welcome home, @User.Identity.Name!</h1>
+        <h3 class="d-sm-inline-flex flex-row">
+            Go to&#8194;<a asp-controller="Users" asp-action="GetAllUsers">Users table</a>&#8194;to see list of users!
+        </h3>
+    }
+    else
+    {
+        <h1>Welcome home!</h1>
+        <h3 class="d-sm-inline-flex flex-row">
+            <a asp-controller="LoginRegister" asp-action="Login">Log in</a>&#8194;or&#8194;<a asp-controller="LoginRegister" asp-action="Register">Register</a>&#8194;to get access to users list
+        </h3>
+    }
+</div>

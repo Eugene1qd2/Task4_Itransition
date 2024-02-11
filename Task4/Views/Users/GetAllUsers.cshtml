@@ -1,0 +1,79 @@
+﻿@model Task4.Domain.ViewModels.User.UsersViewModel
+@{
+    ViewData["Title"] = "GetAllUsers";
+}
+
+<form method="post">
+    <button type="submit" class="btn btn-danger" asp-action="BlockUsers">Block <i class="fa fa-lg fa-lock"></i></button>
+    <button type="submit" class="btn btn-primary" asp-action="UnblockUsers"><i class="fa fa-lg fa-unlock"></i></button>
+    <button type="submit" class="btn btn-outline-danger" asp-action="DeleteUsers"><i class="fa fa-lg fa-trash"></i></button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <input type="checkbox" id="mainCheckbox" asp-for="@Model.SelectAll" />
+                </th>
+                <th scope="col">
+                    Name
+                </th>
+                <th scope="col">
+                    Email
+                </th>
+                <th scope="col">
+                    Status
+                </th>
+                <th scope="col">
+                    Created
+                </th>
+                <th scope="col">
+                    Updated
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Users.Count; i++)
+            {
+                var rowClass = @Model.Users[i].Status == 0 ? "table-default" : "table-danger";
+                <tr class=@rowClass>
+                    <td>
+                        <input type="checkbox" asp-for="@Model.Users[i].isSelected" />
+                        <input type="hidden" asp-for="@Model.Users[i].Id" />
+                    </td>
+                    <td>
+                        @Model.Users[i].UserName
+                    </td>
+                    <td>
+                        @Model.Users[i].Email
+                    </td>
+                    <td>
+                        @Model.Users[i].Status
+                    </td>
+                    <td>
+                        @Model.Users[i].Created
+                    </td>
+                    <td>
+                        @Model.Users[i].Updated
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+@section scripts
+{
+    <script>
+        $(function () {
+            var selectAll = $('#mainCheckbox');
+            var userCheckboxes = $("input:checkbox[name^='Users']");
+
+            selectAll.change(function () {
+                userCheckboxes.prop('checked', $(this).prop('checked'));
+            })
+
+            userCheckboxes.change(function () {
+                var allChecked = userCheckboxes.length === userCheckboxes.filter(":checked").length;
+                selectAll.prop("checked", allChecked);
+            })
+        });
+    </script>
+}
